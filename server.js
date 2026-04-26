@@ -1,5 +1,5 @@
-import express from "express";
-import axios from "axios";
+const express = require("express");
+const axios = require("axios");
 
 const app = express();
 app.use(express.json());
@@ -7,7 +7,6 @@ app.use(express.json());
 const VERIFY_TOKEN = "mi_token_seguro";
 const MAKE_WEBHOOK = "https://hook.make.com/xxxxx";
 
-// 1. Verificación de Meta (IMPORTANTE)
 app.get("/webhook", (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
@@ -20,7 +19,6 @@ app.get("/webhook", (req, res) => {
   res.sendStatus(403);
 });
 
-// 2. Recibir mensajes de WhatsApp
 app.post("/webhook", async (req, res) => {
   const message = req.body;
 
@@ -29,10 +27,11 @@ app.post("/webhook", async (req, res) => {
     text: message.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body
   };
 
-  // enviar a Make
   await axios.post(MAKE_WEBHOOK, data);
 
   res.sendStatus(200);
 });
 
-app.listen(3000, () => console.log("Webhook listo"));
+// 🔴 IMPORTANTE
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Webhook listo"));
