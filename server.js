@@ -4,8 +4,8 @@ const axios = require("axios");
 const app = express();
 app.use(express.json());
 
-const VERIFY_TOKEN = "mi_token_seguro";
-const MAKE_WEBHOOK = "https://hook.make.com/xxxxx";
+const VERIFY_TOKEN = "MateoMake2026";
+const MAKE_WEBHOOK = "https://hook.eu1.make.com/ge581d7l89sdeb13umcm6wiajpu4cm6l";
 
 app.get("/webhook", (req, res) => {
   const mode = req.query["hub.mode"];
